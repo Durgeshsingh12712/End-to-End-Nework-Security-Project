@@ -37,7 +37,7 @@ list_of_files = [
     f"{project_name}/utils/ml_utils/metric/classification_metric.py",
     f"{project_name}/utils/ml_utils/model/__init__.py",
     f"{project_name}/utils/ml_utils/model/estimator.py",
-
+    ".env",
     "Notebook/trials.ipynb",
     "templates/index.html",
     "app.py",
