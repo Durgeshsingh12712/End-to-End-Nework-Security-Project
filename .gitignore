@@ -5,6 +5,8 @@ __pycache__/
 
 # C extensions
 *.so
+Artifacts/*
+logs/*
 Notebook/*
 .env
 Network_Data/*
