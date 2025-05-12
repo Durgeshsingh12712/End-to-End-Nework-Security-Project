@@ -33,3 +33,10 @@ conda activate Project
 3. Utils
 4. Data Transformation
 5. Main.py
+
+# 4. Step Model Trainer
+1. Constan
+2. Entity
+3. Utils>Ml_util>model>estimator and metric>classification
+4. Model Trainer
+5. Main.py

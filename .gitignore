@@ -9,6 +9,7 @@ Artifacts/*
 logs/*
 Notebook/*
 .env
+final_model/*
 Network_Data/*
 # Distribution / packaging
 .Python
