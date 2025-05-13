@@ -24,6 +24,10 @@ from networkSecurity.utils.main_utils.utils import save_object, load_object
 from networkSecurity.utils.main_utils.utils import load_numpy_array_data, evaluate_models
 from networkSecurity.utils.ml_utils.metric.classification_metric import get_classification_score
 
+import dagshub
+dagshub.init(repo_owner='Durgeshsingh12712', repo_name='End-to-End-Nework-Security-Project', mlflow=True)
+
+
 class ModelTrainer:
     def __init__(self, model_trainer_config: ModelTrainerConfig, data_transformation_artifact: DataTransformationArtifact):
         try:
