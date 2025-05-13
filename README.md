@@ -51,3 +51,12 @@ mlflow ui
 ```
 
 ## 6. Add Repo to Dagshub and Track Experiments
+
+## 7. App.py
+1. update 
+2. templates
+3. run
+```bash
+uvicorn app:app --reload
+http://127.0.0.1:8000/docs
+```
