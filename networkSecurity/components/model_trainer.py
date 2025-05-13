@@ -1,6 +1,8 @@
 import os
 import sys
+import mlflow
 
+import mlflow.sklearn
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import r2_score
 from sklearn.neighbors import KNeighborsClassifier
@@ -29,6 +31,17 @@ class ModelTrainer:
             self.data_transformation_artifact = data_transformation_artifact
         except Exception as e:
             raise NetworkSecurityException(e, sys)
+        
+    def track_mlflow(self, best_model, classificationmetric):
+        with mlflow.start_run():
+            f1_score = classificationmetric.f1_score
+            precision_score = classificationmetric.precision_score
+            recall_score = classificationmetric.recall_score
+
+            mlflow.log_metric("F1 Score", f1_score)
+            mlflow.log_metric("Precision Score", precision_score)
+            mlflow.log_metric("Recall Score", recall_score)
+            mlflow.sklearn.log_model(best_model, "model")
         
     def train_model(self, x_train, y_train, x_test, y_test):
         models = {
@@ -81,14 +94,18 @@ class ModelTrainer:
 
         best_model = models[best_model_name]
 
+        ## Track the Experiment with MLFLOW
+        # Train
         y_train_pred = best_model.predict(x_train)
-
         classification_train_metric = get_classification_score(y_actual=y_train, y_pred=y_train_pred)
 
-        ## Track th MLFLOW
+        self.track_mlflow(best_model, classification_train_metric)
 
+        # Test
         y_test_pred = best_model.predict(x_test)
         classification_test_metric = get_classification_score(y_actual=y_test, y_pred=y_test_pred)
+
+        self.track_mlflow(best_model, classification_test_metric)
 
         preprocessor = load_object(file_path=self.data_transformation_artifact.transformed_object_file_path)
 

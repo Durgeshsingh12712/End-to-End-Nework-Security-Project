@@ -40,3 +40,11 @@ conda activate Project
 3. Utils>Ml_util>model>estimator and metric>classification
 4. Model Trainer
 5. Main.py
+
+# 5. Step MLFLOW
+1. Update code (Model Trainer)
+2. main.py
+3. check experiement 
+```bash 
+mlflow ui
+```

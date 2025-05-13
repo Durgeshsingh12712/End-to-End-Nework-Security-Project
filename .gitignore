@@ -11,6 +11,8 @@ Notebook/*
 .env
 final_model/*
 Network_Data/*
+mlruns/*
+
 # Distribution / packaging
 .Python
 build/
