@@ -146,3 +146,11 @@ AWS_ECR_LOGIN_URI
 ECR_REPOSITORY_NAME
 
 ```
+# S3 Bucket
+![My Image](https://github.com/Durgeshsingh12712/Data-All/blob/main/network/1.%20S3%20Bucket.png)
+
+# CICD Deployment
+![My Image](https://github.com/Durgeshsingh12712/Data-All/blob/main/network/2.%20CICD%20Successfull%20Deployement.png)
+
+# Model Launch
+![My Image](https://github.com/Durgeshsingh12712/Data-All/blob/main/network/3.%20Launch%20Model.png)
