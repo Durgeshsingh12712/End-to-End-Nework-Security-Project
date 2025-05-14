@@ -22,9 +22,14 @@ from networkSecurity.entity.artifact_entity import (
     ModelTrainerArtifact
 )
 
+from networkSecurity.cloud.s3_synchronizer import S3Sync
+from networkSecurity.constants.training_pipeline import SAVED_MODEL_DIR, TRAINING_BUCKET_NAME
+import sys
+
 class TrainingPipeline:
     def __init__(self):
         self.training_pipeline_config = TrainingPipelineConfig()
+        self.s3_sync = S3Sync()
 
     def start_data_ingestion(self):
         try:
@@ -71,12 +76,33 @@ class TrainingPipeline:
         except Exception as e:
             raise NetworkSecurityException(e, sys)
         
+    ## Local artifacts is going to s3 bucket
+    def sysc_artifact_dir_to_s3(self):
+        try:
+            aws_bucket_url = f"s3://{TRAINING_BUCKET_NAME}/artifact/{self.training_pipeline_config.timestamp}"
+            self.s3_sync.sync_folder_to_s3(folder= self.training_pipeline_config.artifact_dir, aws_bucket_url=aws_bucket_url)
+        except Exception as e:
+            raise NetworkSecurityException(e, sys)
+
+    ## Local final model is going to s3 bucket
+    def sync_saved_model_dir_to_s3(self):
+        try:
+            aws_bucket_url = f"s3://{TRAINING_BUCKET_NAME}/final_model/{self.training_pipeline_config.timestamp}"
+            self.s3_sync.sync_folder_to_s3(folder = self.training_pipeline_config.model_dir, aws_bucket_url=aws_bucket_url)
+        except Exception as e:
+            raise NetworkSecurityException(e, sys)
+
+
     def run_pipeline(self):
         try:
             data_ingestion_artifact = self.start_data_ingestion()
             data_validation_artifact = self.star_data_validation(data_ingestion_artifact=data_ingestion_artifact)
             data_transformation_artifact = self.start_data_transformation(data_validation_artifact=data_validation_artifact)
             data_model_trainer = self.start_model_trainer(data_transformation_artifact=data_transformation_artifact)
+
+            self.sysc_artifact_dir_to_s3()
+            self.sync_saved_model_dir_to_s3()
+            
             return data_model_trainer
 
         except Exception as e:

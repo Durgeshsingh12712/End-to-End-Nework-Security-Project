@@ -60,3 +60,9 @@ mlflow ui
 uvicorn app:app --reload
 http://127.0.0.1:8000/docs
 ```
+## 8. S3 Bucket Arifact and Final model Upload
+1. training_pipeline
+2. constant
+3. config entity
+4. cloud -> s3_synchronizer
+5. run 
